@@ -7,22 +7,21 @@ const Policy = () => {
             <div className="row contactus ">
                 <div className="col-md-6 ">
                     <img
-                        src="/images/contactus.jpeg"
+                        src="/images/policy1.jpg"
                         alt="contactus"
-                        style={{ width: "100%" }}
+                        style={{ width: "900px", height:"600px" }}
                     />
                 </div>
-                <div className="col-md-4" style={{ textAlign: "justify", fontSize: "18px" }}>
-                    <p>1. Clear rules for website usage, including disclaimers, intellectual property rights, liability limits, and user obligations.</p>
-                    <p>2. Guidelines for collecting, storing, and using personal information, with compliance to data protection laws. Includes details on cookies, analytics, and data security.</p>
-                    <p>3. Policy on refunds, returns, exchanges, and cancellations. States eligibility, time limits, and fees or conditions.</p>
-                    <p>4. Describes shipping process, delivery times, methods, costs, tracking, and responsibility for lost or damaged packages.</p>
-                    <p>5. Accepted payment methods, secure gateways, encryption, and fraud prevention measures.</p>
-                    <p>6. Accurate and detailed product or service descriptions, including specifications, materials, limitations, and any warranties.</p>
-                    <p>7. Guidelines on copyright, trademarks, and user-generated content.</p>
+                <div className="col-md-4 policy" style={{ textAlign: "justify", fontSize: "18px" }}>
+                    <h1 className="bg-dark p-2 text-white text-center">PRIVACY AND POLICY</h1>
+                    <p> Clear rules for website usage, including disclaimers, intellectual property rights, liability limits, and user obligations.</p>
+                    <p> Policy on refunds, returns, exchanges, and cancellations. States eligibility, time limits, and fees or conditions.</p>
+                    <p> Describes shipping process, delivery times, methods, costs, tracking, and responsibility for lost or damaged packages.</p>
+                    <p> Accepted payment methods, secure gateways, encryption, and fraud prevention measures.</p>
+                    <p> Guidelines on copyright, trademarks, and user-generated content.</p>
                 </div>
             </div>
-        </Layout>   
+        </Layout>
     );
 };
 

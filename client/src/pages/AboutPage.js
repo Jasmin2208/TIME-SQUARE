@@ -6,22 +6,49 @@ const About = () => {
         <Layout title={"About us - JK Collection"}>
             <div className="row contactus ">
                 <div className="col-md-6 ">
-                    <img
+                    {/* <img
                         src="/images/about.jpeg"
                         alt="contactus"
                         style={{ width: "100%" }}
-                    />
+                    /> */}
+                    <div id="carouselExampleCaptions" className="carousel slide" data-bs-interval="1000">
+                        <div className="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1" />
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2" />
+                            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3" />
+                        </div>
+                        <div className="carousel-inner">
+                            <div className="carousel-item active">
+                                <img src="/images/1.webp" className="d-block w-100" alt="..." style={{ width: "700px", height: "600px" }} />
+                            </div>
+                            <div className="carousel-item">
+                                <img src="/images/2.webp" className="d-block w-100" alt="..." style={{ width: "700px", height: "600px" }} />
+                            </div>
+                            <div className="carousel-item">
+                                <img src="/images/3.webp" className="d-block w-100" alt="..." style={{ width: "700px", height: "600px" }} />
+                            </div>
+                        </div>
+                        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span className="carousel-control-prev-icon" aria-hidden="true" />
+                            <span className="visually-hidden">Previous</span>
+                        </button>
+                        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span className="carousel-control-next-icon" aria-hidden="true" />
+                            <span className="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
                 </div>
                 <div className="about col-md-4">
-                    <p className="text-justify mt-2" style={{ textAlign: "justify", fontSize:"19px"}}>
-                        At <strong>JK COLLECTION</strong> , we believe that shopping should be an enjoyable and convenient experience for everyone. We strive to provide you with a seamless online platform where you can discover a wide range of high-quality products and enjoy exceptional customer service.
+                <h1 className="bg-dark p-2 text-white text-center">ABOUT US</h1>
+                    <h1 className="text-center about-title mt-3 mb-0">Welcome to <strong>TIME-SQARE </strong></h1>
+                    <h3 className="text-center about-title-line mt-0">Your Ultimate Watch Destination!</h3>
+                    <p className="text-justify about mt-4" style={{ textAlign: "justify", fontSize: "19px" }}>
+                        At <strong>TIME-SQARE</strong>, we believe that time is the most precious commodity, and that is why we are dedicated to providing you with an exceptional watch shopping experience. Our mission is to help you find the perfect timepiece that reflects your style, enhances your everyday life, and becomes a treasured companion on your journey through time.
                     </p>
-                    <p className="text-justify mt-2" style={{ textAlign: "justify", fontSize:"19px" }}>
-                        Our vision is to become your go-to destination for all your shopping needs. We aim to create an online marketplace that offers an extensive selection of products, from everyday essentials to unique and specialized items. We want to be the platform that connects you with reliable sellers and helps you find exactly what you're looking for.
-                    </p>
-                    <p className="text-justify mt-2" style={{ textAlign: "justify",fontSize:"19px" }}>
-                        We understand the importance of quality and authenticity when it comes to online shopping. That's why we work diligently to partner with trusted sellers and brands who share our commitment to delivering genuine and superior products. We carefully curate our collection to ensure that each item meets our strict quality standards, providing you with a satisfying shopping experience every time.
-                    </p>
+                    <p className="text-justify about mt-2" style={{ textAlign: "justify", fontSize: "19px" }}>
+                        We curate a diverse collection of watches, ranging from classic and elegant designs to modern and cutting-edge timepieces. We collaborate with renowned watchmakers from around the world to offer you a wide range of options, ensuring that you can find the watch that suits your preferences.</p>
+                    <p className="text-center about-line">TIME SQARE - Where Time Finds Its Perfect Square.</p>
                 </div>
             </div>
         </Layout>
