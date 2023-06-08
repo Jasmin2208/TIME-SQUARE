@@ -1,5 +1,5 @@
 .product-details {
-    margin-top: 100px !important;
+    margin-top: 50px !important;
 }
 
 .product-details-info {
@@ -16,6 +16,7 @@
 .similar-products .card {
     background-color: rgba(128, 128, 128, 0.097);
     width: 18rem;
+    height: 30rem;
 }
 
 .similar-products .card-name-price {

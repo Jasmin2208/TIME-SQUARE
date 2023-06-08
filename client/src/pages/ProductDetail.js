@@ -14,10 +14,6 @@ function ProductDetail() {
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [cart, setCart] = useCart()
 
-
-    console.log("cart--->", cart)
-
-
     //initalp details
     useEffect(() => {
         if (params?.slug) getProduct();
@@ -53,8 +49,7 @@ function ProductDetail() {
                         src={`/api/v1/product/product-photo/${product._id}`}
                         className="card-img-top"
                         alt={product.name}
-                        height="300"
-                        width={"350px"}
+                        style={{ height: "400px", width: "600px" }}
                     />
                 </div>
                 <div className="col-md-6 product-details-info">
@@ -109,24 +104,12 @@ function ProductDetail() {
                                 </p>
                                 <div className="card-name-price">
                                     <button
+                                        style={{ position: "absolute", width: "250px", bottom: "9px" }}
                                         className="btn btn-info ms-1"
                                         onClick={() => navigate(`/product/${p.slug}`)}
                                     >
                                         More Details
                                     </button>
-                                    {/* <button
-                  className="btn btn-dark ms-1"
-                  onClick={() => {
-                    setCart([...cart, p]);
-                    localStorage.setItem(
-                      "cart",
-                      JSON.stringify([...cart, p])
-                    );
-                    toast.success("Item Added to cart");
-                  }}
-                >
-                  ADD TO CART
-                </button> */}
                                 </div>
                             </div>
                         </div>
