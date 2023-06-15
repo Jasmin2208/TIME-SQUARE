@@ -55,11 +55,11 @@ const WishListPage = () => {
         {!spinner && (
           <>
             <div className='row'>
-              <div className='col-md-10'>
+              <div className='col-md-11'>
                 <h4 className="text-center">Wish List Product</h4>
                 <h6 className="text-center">{products?.length} result found </h6>
               </div>
-              <div className='col-md-2'>
+              <div className='col-md-1'>
                 <AiFillDelete style={{ width: "50px", height: "50px" }} onClick={() => handleAllRemove()} />
               </div>
             </div>

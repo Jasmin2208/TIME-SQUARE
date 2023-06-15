@@ -27,7 +27,7 @@ function HomePage() {
     const [spinner, setSpinner] = useState(false)
     const [likedProduct, setLikedProducts] = useState([])
     const redHeartStyle = { color: 'red' }
-    const whiteHeartStyle = { color: 'white' }
+    const whiteHeartStyle = { color: '#cd8484' }
 
     const navigate = useNavigate()
     const [cart, setCart] = useCart()
@@ -90,9 +90,16 @@ function HomePage() {
     const handleWishList = async (pid) => {
         const user = auth.user.id
 
-        const { data } = await axios.post(`/api/v1/product/wish-list`, { user, product: pid });
+        if (likedProduct?.includes(pid)) {
+            const { data } = await axios.put(`/api/v1/product/delete-wish-list/${user}`, { product: pid });
+            toast.success("Produce Remove To Wise List Successfully !!!")
+
+        } else {
+            const { data } = await axios.post(`/api/v1/product/wish-list`, { user, product: pid });
+            toast.success("Produce Add To Wise List Successfully !!!")
+        }
+
         makeLiked()
-        toast.success("Produce Add To Wise List Successfully !!!")
     }
 
 
