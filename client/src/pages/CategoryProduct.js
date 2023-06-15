@@ -57,19 +57,18 @@ function CategoryProduct() {
 
     return (
         <Layout>
-            <div className="container mt-3 category">
+            <div className="mt-3 category">
                 {spinner &&
                     <Loader />
                 }{spinner === false &&
                     <>
-
                         <h4 className="text-center">Category - {category?.name}</h4>
                         <h6 className="text-center">{products?.length} result found </h6>
-                        <div className="row">
-                            <div className="col-md-9 offset-1">
+                       
+                            <div className="col-md-12  offset-1">
                                 <div className="d-flex flex-wrap">
                                     {products?.map((p) => (
-                                        <div className="card m-2" key={p._id} style={{ height: "470px" }}>
+                                        <div className="card m-3" key={p._id} style={{ height: "470px" }}>
                                             <img
                                                 src={`/api/v1/product/product-photo/${p._id}`}
                                                 className="card-img-top"
@@ -82,7 +81,7 @@ function CategoryProduct() {
                                                         {p.price.toLocaleString("en-US", {
                                                             style: "currency",
                                                             currency: "USD",
-                                                        })}
+                                                         })}
                                                     </h5>
                                                 </div>
                                                 <p className="card-text ">
@@ -128,7 +127,7 @@ function CategoryProduct() {
             )}
           </div> */}
                             </div>
-                        </div>
+                        
                     </>
                 }
             </div>

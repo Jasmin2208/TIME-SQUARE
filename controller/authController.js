@@ -81,8 +81,7 @@ const login = async (req, res) => {
                 success: false,
                 message: "Invalid Email"
             })
-        }
-
+        }       
         const match = await comparePassword(password, user.password)
         if (!match) {
             return res.status(404).send({
@@ -97,6 +96,7 @@ const login = async (req, res) => {
             success: true,
             message: "Login Successfully!!",
             user: {
+                id: user._id,
                 name: user.name,
                 email: user.email,
                 phone: user.phone,

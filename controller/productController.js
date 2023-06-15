@@ -5,7 +5,9 @@ const slugify = require("slugify")
 const Category = require("../models/categoryModel")
 const braintree = require("braintree");
 const Orders = require("../models/orderModel")
-require("dotenv").config() 
+const Wish = require("../models/wishListModel");
+const { errorMonitor } = require("events");
+require("dotenv").config()
 
 let gateway = new braintree.BraintreeGateway({
     environment: braintree.Environment.Sandbox,
@@ -369,4 +371,132 @@ const braintreePayment = async (req, res) => {
     }
 }
 
-module.exports = { createProduct, getProduct, getSingleProduct, getByProductPhoto, deleteProduct, updateProduct, productFilter, productCount, productList, searchProduct, realtedProduct, productcategory, braintreeToken, braintreePayment }
+const wishListProduct = async (req, res) => {
+    try {
+        const { user, product } = req.body
+
+        const userData = await Wish.findOne({ user: user })
+
+        if (userData) {
+            const isProductLiked = userData.products.some((p) => p._id == product);
+            if (isProductLiked) {
+                return res.status(200).send({
+                    error: false,
+                    message: 'Product already liked',
+                });
+            }
+
+            if (userData) {
+                const addProduct = await Wish.findByIdAndUpdate({ _id: userData._id }, { $push: { products: product } }, { new: true })
+
+                return res.status(201).send({
+                    success: true,
+                    addProduct,
+                    message: "Use Wish Product add Successfully"
+                })
+            }
+
+            const wishProducts = await new Wish({
+                user, products: product
+            }).save()
+
+            return res.status(200).send({
+                success: true,
+                wishProducts,
+                message: "Use Wish Product"
+            })
+
+        }
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Error In WishList",
+            error: error.message
+        })
+    }
+}
+
+
+const getWishListProduct = async (req, res) => {
+
+    try {
+        const { user } = req.params
+
+        const getData = await Wish.findOne({ user: user })
+
+        const products = await Product.find({ "_id": { "$in": getData.products } }).select('-photo')
+
+        res.status(200).send({
+            success: false,
+            message: "get In WishList product",
+            products
+        })
+
+    } catch (error) {
+        console.log("err--->", error);
+        res.status(500).send({
+            success: false,
+            message: "Error In getWishList",
+            error: error.message
+        })
+    }
+}
+
+const deleteWishListProduct = async (req, res) => {
+
+    try {
+        const { user } = req.params
+
+        const { product } = req.body
+
+        if (product) {
+            await Wish.updateMany({ user: user }, { $pull: { products: { $in: [product] } } }, { new: true })
+            return res.status(200).send({
+                success: true,
+                message: "delete In WishList",
+            })
+        } else {
+            await Wish.updateOne({ user: user }, { $set: { products: [] } }, { new: true });
+            return res.status(200).send({
+                success: true,
+                message: "sfsf delete In WishList",
+            })
+        }
+
+
+
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: "Error In delete WishList",
+            error: error.message
+        })
+    }
+}
+
+const makeWishList = async (req, res) => {
+    try {
+
+        const { user } = req.params
+
+        const [data] = await Wish.find(
+            { user: user }
+        );
+
+        console.log("d->", data)
+
+        res.json({
+            error: false,
+            product: data.products
+        })
+
+    } catch (error) {
+        res.status(400).json({
+            error: true,
+            errorMessage: error.message,
+            message: 'Error while liked product',
+        });
+    }
+}
+
+module.exports = { makeWishList, createProduct, getProduct, getSingleProduct, getByProductPhoto, deleteProduct, updateProduct, productFilter, productCount, productList, searchProduct, realtedProduct, productcategory, braintreeToken, braintreePayment, wishListProduct, getWishListProduct, deleteWishListProduct }

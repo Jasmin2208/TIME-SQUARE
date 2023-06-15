@@ -4,7 +4,7 @@ const formidableMiddleware = require('express-formidable');
 
 const router = express.Router()
 
-const { createProduct, getProduct, getSingleProduct, getByProductPhoto, deleteProduct, updateProduct, productFilter, productCount, productList, searchProduct, realtedProduct, productcategory, braintreeToken, braintreePayment } = require("../controller/productController")
+const { makeWishList, createProduct, getProduct, getSingleProduct, getByProductPhoto, deleteProduct, updateProduct, productFilter, productCount, productList, searchProduct, realtedProduct, productcategory, braintreeToken, braintreePayment, wishListProduct, getWishListProduct, deleteWishListProduct } = require("../controller/productController")
 
 router.post("/create-product", authentication, isAdmin, formidableMiddleware(), createProduct)
 
@@ -33,5 +33,13 @@ router.get("/product-category/:slug", productcategory)
 router.get("/braintree/token",braintreeToken)
 
 router.post("/braintree/payment", authentication, braintreePayment)
+
+router.post("/wish-list", authentication, wishListProduct)
+
+router.get("/get-wish-list/:user", authentication, getWishListProduct)
+
+router.put("/delete-wish-list/:user", authentication, deleteWishListProduct)
+
+router.get("/makewish-list/:user", authentication, makeWishList)
 
 module.exports = router

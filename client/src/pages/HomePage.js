@@ -9,10 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart";
 import "../styles/homePageStyle.css"
 import Loader from "./Loader";
+import { AiFillHeart } from 'react-icons/ai';
+import { useAuth } from "../context/auth";
 
 
 function HomePage() {
-
+    const [auth, setAuth] = useAuth()
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [name, setName] = useState("");
@@ -23,6 +25,9 @@ function HomePage() {
     const [loading, setLoading] = useState(false);
     const [loadFilter, setLoadFilter] = useState(true)
     const [spinner, setSpinner] = useState(false)
+    const [likedProduct, setLikedProducts] = useState([])
+    const redHeartStyle = { color: 'red' }
+    const whiteHeartStyle = { color: 'white' }
 
     const navigate = useNavigate()
     const [cart, setCart] = useCart()
@@ -82,6 +87,14 @@ function HomePage() {
         setChecked(all)
     }
 
+    const handleWishList = async (pid) => {
+        const user = auth.user.id
+
+        const { data } = await axios.post(`/api/v1/product/wish-list`, { user, product: pid });
+        makeLiked()
+        toast.success("Produce Add To Wise List Successfully !!!")
+    }
+
 
     //Filter Products
     const filterProduct = async () => {
@@ -107,6 +120,22 @@ function HomePage() {
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong in Count The Products")
+        }
+    }
+
+    useEffect(() => {
+        makeLiked()
+        console.log("like-->", likedProduct);
+    }, [likedProduct.length])
+
+    const makeLiked = async () => {
+        try {
+            const id = auth.user.id
+            const { data } = await axios.get(`/api/v1/product/makewish-list/${id}`);
+            setLikedProducts(data?.product);
+        } catch (error) {
+            setSpinner(false)
+            console.log(error);
         }
     }
 
@@ -189,6 +218,13 @@ function HomePage() {
                                             className="card-img-top"
                                             alt={p.name}
                                         />
+                                        <div style={{ position: 'absolute', top: '8px', right: '0px' }}>
+                                            <div className="stage">
+                                                <div className="heart">
+                                                    <AiFillHeart size={40} onClick={() => handleWishList(p._id)} style={likedProduct?.includes(p._id) ? redHeartStyle : whiteHeartStyle} />
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="card-body">
                                             <div className="card-name-price">
                                                 <h5 className="card-title">{p.name}</h5>

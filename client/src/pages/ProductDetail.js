@@ -65,7 +65,7 @@ function ProductDetail() {
                         })}
                     </h6>
                     <h6>Category : {product?.category?.name}</h6>
-                    <button class="btn btn-secondary ms-1" onClick={() => {
+                    <button className="btn btn-secondary ms-1" onClick={() => {
                         setCart([...cart, product]);
                         localStorage.setItem(
                             "cart",

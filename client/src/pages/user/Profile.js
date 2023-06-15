@@ -26,7 +26,6 @@ function Profile() {
         e.preventDefault();
         try {
             const { data } = await axios.put('/api/v1/auth/profile', { name, email, password, phone, address })
-            console.log("res-->", data)
             if (data?.success) {
                 setAuth({ ...auth, user: data?.updateUser })
                 let ls = localStorage.getItem("auth")

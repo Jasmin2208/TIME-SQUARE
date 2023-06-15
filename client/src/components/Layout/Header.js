@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import useCategory from '../../hooks/useCategory';
 import { useCart } from '../../context/cart';
 import { Badge, Avatar, Space } from 'antd';
+import { AiFillHeart } from 'react-icons/ai';
 
 function Header() {
 
@@ -93,6 +94,11 @@ function Header() {
                             <li className="nav-item">
                                 <Space>
                                     <NavLink className="nav-link" to="/cart">Cart <Badge count={cart?.length} /></NavLink>
+                                </Space>
+                            </li>
+                            <li className="nav-item">
+                                <Space>
+                                    <NavLink className="nav-link" to="/wishList"><AiFillHeart size={30} style={{color:"red"}} /></NavLink>
                                 </Space>
                             </li>
                         </ul>

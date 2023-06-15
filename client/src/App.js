@@ -25,6 +25,7 @@ import Category from "./pages/Category";
 import CategoryProduct from "./pages/CategoryProduct";
 import CartPage from "./pages/CartPage";
 import AdminOrders from "./pages/Admin/AdminOrders";
+import WishListPage from "./pages/WishListPage";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
           <Route path="user/orders" element={<Orders />} />
         </Route>
 
+          <Route path="/wishList" element={<WishListPage />} />
+          
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/create-category" element={<CreateCategory />} />
