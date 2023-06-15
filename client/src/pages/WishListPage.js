@@ -7,12 +7,14 @@ import Loader from "./Loader";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
 import { AiFillDelete } from 'react-icons/ai';
+import { useCart } from "../context/cart";
 
 
 const WishListPage = () => {
   const [products, setProducts] = useState([]);
   const [auth, setAuth] = useAuth();
   const [spinner, setSpinner] = useState(false);
+  const [cart, setCart] = useCart()
   const navigate = useNavigate();
 
   const getProduct = async () => {
@@ -50,23 +52,23 @@ const WishListPage = () => {
 
   return (
     <Layout>
-      <div className="mt-3 category">
+      <div className="mt-3 category" style={{marginLeft:"10rem"}}>
         {spinner && <Loader />}
         {!spinner && (
           <>
-            <div className='row'>
-              <div className='col-md-11'>
+            <div className='row' style={{marginLeft:"35rem"}}>
+              <div className='col'>
                 <h4 className="text-center">Wish List Product</h4>
                 <h6 className="text-center">{products?.length} result found </h6>
               </div>
-              <div className='col-md-1'>
+              <div className='col' style={{marginLeft:"25rem"}}>
                 <AiFillDelete style={{ width: "50px", height: "50px" }} onClick={() => handleAllRemove()} />
               </div>
             </div>
-            <div className="col-md-12  offset-1">
+            <div className="col-md-12 container offset-1">
               <div className="d-flex flex-wrap">
                 {products?.map((p) => (
-                  <div className="card m-3" key={p._id} style={{ height: "470px" }}>
+                  <div className="card m-3" key={p._id} style={{ height: "530px" }}>
                     <img
                       src={`/api/v1/product/product-photo/${p._id}`}
                       className="card-img-top"
@@ -85,7 +87,7 @@ const WishListPage = () => {
                       <p className="card-text">
                         {p.description && p.description.length > 60 ? `${p.description.substring(0, 60)}...` : p.description}
                       </p>
-                      <div className="card-name-price" style={{ position: "absolute", bottom: "9px", height: "35px", width: "250px" }}>
+                      <div className="card-name-price" style={{ position: "absolute", bottom: "55px", height: "35px", width: "250px" }}>
                         <button
                           className="btn btn-info ms-1"
                           // style={{   : "absolute", bottom: "9px", width: "250px" }}
@@ -98,6 +100,22 @@ const WishListPage = () => {
                           onClick={() => handleRemove(p._id)}
                         >
                           Remove
+                        </button>
+                      </div>
+                      <div className="card-name-price" style={{ position: "absolute", bottom: "9px", height: "35px", width: "250px" }}>
+                        <button
+                          className="btn btn-dark ms-1"
+                          id="addbtn"
+                          onClick={() => {
+                            setCart([...cart, p]);
+                            localStorage.setItem(
+                              "cart",
+                              JSON.stringify([...cart, p])
+                            );
+                            toast.success("Item Added to cart");
+                          }}
+                        >
+                          ADD TO CART
                         </button>
                       </div>
                     </div>

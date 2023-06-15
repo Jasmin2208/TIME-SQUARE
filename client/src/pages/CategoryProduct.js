@@ -57,7 +57,7 @@ function CategoryProduct() {
 
     return (
         <Layout>
-            <div className="mt-3 category">
+            <div className="mt-3 category ml-12">
                 {spinner &&
                     <Loader />
                 }{spinner === false &&
@@ -65,7 +65,7 @@ function CategoryProduct() {
                         <h4 className="text-center">Category - {category?.name}</h4>
                         <h6 className="text-center">{products?.length} result found </h6>
                        
-                            <div className="col-md-12  offset-1">
+                            <div className="col-md-12 container  offset-1">
                                 <div className="d-flex flex-wrap">
                                     {products?.map((p) => (
                                         <div className="card m-3" key={p._id} style={{ height: "470px" }}>
