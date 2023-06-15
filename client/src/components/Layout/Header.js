@@ -90,15 +90,15 @@ function Header() {
                                     </>
                                 )
                             }
+                            <li className="nav-item">
+                                <Space>
+                                    <NavLink className="nav-link" to="/wishList">wishlist <AiFillHeart size={25} style={{ color: "white" }} /></NavLink>
+                                </Space>
+                            </li>
 
                             <li className="nav-item">
                                 <Space>
                                     <NavLink className="nav-link" to="/cart">Cart <Badge count={cart?.length} /></NavLink>
-                                </Space>
-                            </li>
-                            <li className="nav-item">
-                                <Space>
-                                    <NavLink className="nav-link" to="/wishList"><AiFillHeart size={30} style={{color:"red"}} /></NavLink>
                                 </Space>
                             </li>
                         </ul>

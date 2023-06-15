@@ -40,6 +40,6 @@ router.get("/get-wish-list/:user", authentication, getWishListProduct)
 
 router.put("/delete-wish-list/:user", authentication, deleteWishListProduct)
 
-router.get("/makewish-list/:user", authentication, makeWishList)
+router.get("/makewish-list/:user",authentication, makeWishList)
 
 module.exports = router

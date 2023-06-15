@@ -385,17 +385,15 @@ const wishListProduct = async (req, res) => {
                     message: 'Product already liked',
                 });
             }
+            const addProduct = await Wish.findByIdAndUpdate({ _id: userData._id }, { $push: { products: product } }, { new: true })
 
-            if (userData) {
-                const addProduct = await Wish.findByIdAndUpdate({ _id: userData._id }, { $push: { products: product } }, { new: true })
+            return res.status(201).send({
+                success: true,
+                addProduct,
+                message: "Use Wish Product add Successfully"
+            })
 
-                return res.status(201).send({
-                    success: true,
-                    addProduct,
-                    message: "Use Wish Product add Successfully"
-                })
-            }
-
+        } else {
             const wishProducts = await new Wish({
                 user, products: product
             }).save()
@@ -405,7 +403,6 @@ const wishListProduct = async (req, res) => {
                 wishProducts,
                 message: "Use Wish Product"
             })
-
         }
     } catch (error) {
         res.status(500).send({

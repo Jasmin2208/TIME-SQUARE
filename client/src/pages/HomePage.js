@@ -133,7 +133,7 @@ function HomePage() {
     useEffect(() => {
         makeLiked()
         console.log("like-->", likedProduct);
-    }, [likedProduct.length])
+    }, [auth.user, likedProduct.length])
 
     const makeLiked = async () => {
         try {
