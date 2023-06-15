@@ -132,7 +132,6 @@ function HomePage() {
 
     useEffect(() => {
         makeLiked()
-        console.log("like-->", likedProduct);
     }, [auth.user, likedProduct.length])
 
     const makeLiked = async () => {

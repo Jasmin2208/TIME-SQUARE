@@ -70,8 +70,6 @@ function UpdateProduct() {
             photo && productData.append("photo", photo);
             productData.append("category", category);
 
-            console.log("photo-->",photo.name)
-
             const { data } = await axios.put(`/api/v1/product/update-product/${id}`, productData);
 
             if (data?.success) {

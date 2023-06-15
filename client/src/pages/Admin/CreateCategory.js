@@ -83,7 +83,6 @@ function CreateCategory() {
         try {
             const { data } = await axios.delete(`/api/v1/category/delete-category/${id}`);
             if (data?.success) {
-                console.log(data)
                 toast.success(data.message);
                 getAllCategory();
             } else {

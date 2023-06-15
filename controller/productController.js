@@ -430,7 +430,6 @@ const getWishListProduct = async (req, res) => {
         })
 
     } catch (error) {
-        console.log("err--->", error);
         res.status(500).send({
             success: false,
             message: "Error In getWishList",
@@ -479,8 +478,6 @@ const makeWishList = async (req, res) => {
         const [data] = await Wish.find(
             { user: user }
         );
-
-        console.log("d->", data)
 
         res.json({
             error: false,

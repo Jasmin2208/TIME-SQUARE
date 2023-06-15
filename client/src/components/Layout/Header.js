@@ -37,7 +37,6 @@ function Header() {
         e.preventDefault();
         try {
             const { data } = await axios.get(`/api/v1/product/search/${values.keyword}`);
-            console.log('data-->', data);
             setValues({ ...values, results: data });
             navigate("/search");
         } catch (error) {
