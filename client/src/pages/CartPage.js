@@ -5,7 +5,6 @@ import { useAuth } from '../context/auth';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { AiFillWarning } from "react-icons/ai";
 import DropIn from "braintree-web-drop-in-react";
 import "../styles/cartStyle.css"
 import { Button, Space } from 'antd';
