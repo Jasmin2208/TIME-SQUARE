@@ -6,11 +6,33 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/cart";
 import toast from "react-hot-toast";
 
-
 const Search = () => {
     const [values, setValues] = useSearch();
     const navigate = useNavigate()
     const [cart, setCart] = useCart()
+
+    const handleAddToCart = (product) => {
+        const existingProduct = cart.find((item) => item._id === product._id);
+        if (existingProduct) {
+            const updatedCart = cart.map((item) => {
+                if (item._id === product._id) {
+                    return {
+                        ...item,
+                        quantity: item.quantity + 1
+                    };
+                }
+                return item;
+            });
+
+            setCart(updatedCart);
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+            toast.success("Quantity updated in cart");
+        } else {
+            setCart([...cart, { ...product, quantity: 1 }]);
+            localStorage.setItem("cart", JSON.stringify([...cart, { ...product, quantity: 1 }]));
+            toast.success("Item added to cart");
+        }
+    };
 
     return (
         <Layout title={"Search results"}>
@@ -49,14 +71,7 @@ const Search = () => {
                                         <button
                                             className="btn btn-dark ms-1"
                                             id="addbtn"
-                                            onClick={() => {
-                                                setCart([...cart, p]);
-                                                localStorage.setItem(
-                                                    "cart",
-                                                    JSON.stringify([...cart, p])
-                                                );
-                                                toast.success("Item Added to cart");
-                                            }}
+                                            onClick={() => handleAddToCart(p)}
                                         >
                                             ADD TO CART
                                         </button>

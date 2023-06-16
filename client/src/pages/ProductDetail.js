@@ -41,6 +41,29 @@ function ProductDetail() {
             console.log(error);
         }
     };
+
+    const handleAddToCart = (product) => {
+        const existingProduct = cart.find((item) => item._id === product._id);
+        if (existingProduct) {
+            const updatedCart = cart.map((item) => {
+                if (item._id === product._id) {
+                    return {
+                        ...item,
+                        quantity: item.quantity + 1
+                    };
+                }
+                return item;
+            });
+
+            setCart(updatedCart);
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
+            toast.success("Quantity updated in cart");
+        } else {
+            setCart([...cart, { ...product, quantity: 1 }]);
+            localStorage.setItem("cart", JSON.stringify([...cart, { ...product, quantity: 1 }]));
+            toast.success("Item added to cart");
+        }
+    };
     return (
         <Layout>
             <div className="row container product-details">
@@ -65,14 +88,7 @@ function ProductDetail() {
                         })}
                     </h6>
                     <h6>Category : {product?.category?.name}</h6>
-                    <button className="btn btn-secondary ms-1" onClick={() => {
-                        setCart([...cart, product]);
-                        localStorage.setItem(
-                            "cart",
-                            JSON.stringify([...cart, product])
-                        );
-                        toast.success("Item Added to cart");
-                    }}>ADD TO CART</button>
+                    <button className="btn btn-secondary ms-1" onClick={() => handleAddToCart(product)}>ADD TO CART</button>
                 </div>
             </div>
             <hr />

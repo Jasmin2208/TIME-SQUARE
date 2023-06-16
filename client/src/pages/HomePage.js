@@ -178,7 +178,6 @@ function HomePage() {
             });
 
             setCart(updatedCart);
-            console.log("updatecart-->", cart)
             localStorage.setItem("cart", JSON.stringify(updatedCart));
             toast.success("Quantity updated in cart");
         } else {

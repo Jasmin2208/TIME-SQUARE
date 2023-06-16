@@ -2,11 +2,19 @@
     margin-top: 64px;
 }
 
-.cart-page h1 {
+.cart-page .cartHeader {
     padding: 15px !important;
     font-family: "roboto", sans-serif;
     font-weight: normal;
     background-color: rgba(0, 0, 255, 0.072) !important;
+}
+
+.cartHeader .user{
+    margin-left: 41rem;
+}
+
+.cartHeader .clearCart{
+    margin-left: 40rem;
 }
 
 .cart-page h1>p {

@@ -10,6 +10,7 @@ import DropIn from "braintree-web-drop-in-react";
 import "../styles/cartStyle.css"
 import { Button, Space } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { AiFillDelete } from 'react-icons/ai';
 
 
 function CartPage() {
@@ -52,7 +53,7 @@ function CartPage() {
             return item;
         });
         setCart(updatedCart);
-        localStorage.setItem("cart", JSON.stringify(updatedCart));  
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
     };
 
     //total price
@@ -114,12 +115,18 @@ function CartPage() {
         }
     };
 
+    const handleRemove = ()=>{
+        localStorage.clear();
+        setCart([])
+        toast.success("Cart clear successfully!!")
+    }
+
     return (
         <Layout>
             <div className=" cart-page">
-                <div className="row">
-                    <div className="col-md-12">
-                        <h1 className="text-center bg-light p-2 mb-1">
+                <div className="row bg-light p-2 mb-1 cartHeader">
+                    <div className="col user">
+                        <h1 className="text-center">
                             {!auth?.user
                                 ? "Hello Guest"
                                 : `Hello  ${auth?.token && auth?.user?.name}`}
@@ -130,6 +137,9 @@ function CartPage() {
                                     : " Your Cart Is Empty"}
                             </p>
                         </h1>
+                    </div>
+                    <div className="col clearCart">
+                        <AiFillDelete style={{ width: "50px", height: "50px", display: "flex", justifyContent: "right" }} onClick={()=>handleRemove()} />
                     </div>
                 </div>
                 <div className="container ">
