@@ -1,13 +1,19 @@
-const mongoose =  require("mongoose");
+const mongoose = require("mongoose");
 
 
 const orderSchema = new mongoose.Schema(
   {
     products: [
       {
-        type: mongoose.ObjectId,
-        ref: "Products",
-      },
+        id: {
+          type: mongoose.ObjectId,
+          ref: "Products",
+
+        },
+        quantity: {
+          type: Number
+        }
+      }
     ],
     payment: {},
     buyer: {
@@ -18,11 +24,22 @@ const orderSchema = new mongoose.Schema(
       type: String,
       default: "Not Process",
       enum: ["Not Process", "Processing", "Shipped", "deliverd", "cancel"],
-    },
+    }
   },
   { timestamps: true }
 );
 
-const Orders =  mongoose.model("Order", orderSchema);
+const Orders = mongoose.model("Order", orderSchema);
 
 module.exports = Orders;
+
+// {
+//   id: {
+//     type: mongoose.ObjectId,
+//     ref: "Products",
+//   },
+//   quantity: {
+//     type: String,
+//     default: "1"
+//   }
+// }

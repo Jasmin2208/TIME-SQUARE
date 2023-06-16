@@ -11,7 +11,7 @@ function Orders() {
     const getOrders = async () => {
         try {
             const { data } = await axios.get("/api/v1/auth/orders");
-            setOrders(data.orders);
+            setOrders(data.formattedOrders);
         } catch (error) {
             console.log(error);
         }
@@ -42,6 +42,7 @@ function Orders() {
                                                     <th scope="col"> date</th>
                                                     <th scope="col">Payment</th>
                                                     <th scope="col">Quantity</th>
+                                                    <th scope="col">Total Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -52,6 +53,7 @@ function Orders() {
                                                     <td>{moment(o?.createAt).fromNow()}</td>
                                                     <td>{o?.payment.success ? "Success" : "Failed"}</td>
                                                     <td>{o?.products?.length}</td>
+                                                    <td style={{ color: "green", fontWeight:"bold"}}>$ {o?.payment.transaction.amount}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -64,6 +66,7 @@ function Orders() {
                                                     <div className="col-md-8">
                                                         <p>{p.name}</p>
                                                         <p>{p.description.substring(0, 30)}...</p>
+                                                        <p>Quantity :{p.quantity}</p>
                                                         <p style={{ color: "green", fontWeight: "bold" }}>{p.price.toLocaleString("en-US", {
                                                             style: "currency",
                                                             currency: "USD",

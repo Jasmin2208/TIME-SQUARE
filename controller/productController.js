@@ -7,6 +7,7 @@ const braintree = require("braintree");
 const Orders = require("../models/orderModel")
 const Wish = require("../models/wishListModel");
 const { errorMonitor } = require("events");
+const { log } = require("console");
 require("dotenv").config()
 
 let gateway = new braintree.BraintreeGateway({
@@ -337,10 +338,19 @@ const braintreeToken = async (req, res) => {
 const braintreePayment = async (req, res) => {
     try {
         const { nonce, cart } = req.body;
+
         let total = 0;
         cart.map((i) => {
-            total += i.price;
+            total += i.price * i.quantity;
         });
+
+        const orderProduct = cart.map((i) => {
+            return {
+                id: i._id,
+                quantity: i.quantity
+            }
+        })
+
         let newTransaction = gateway.transaction.sale(
             {
                 amount: total,
@@ -349,10 +359,11 @@ const braintreePayment = async (req, res) => {
                     submitForSettlement: true,
                 },
             },
-            function (error, result) {
+
+            async function (error, result) {
                 if (result) {
-                    const order = new Orders({
-                        products: cart,
+                    const order = await new Orders({
+                        products: orderProduct,
                         payment: result,
                         buyer: req.user._id,
                     }).save();

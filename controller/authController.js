@@ -81,7 +81,7 @@ const login = async (req, res) => {
                 success: false,
                 message: "Invalid Email"
             })
-        }       
+        }
         const match = await comparePassword(password, user.password)
         if (!match) {
             return res.status(404).send({
@@ -201,11 +201,28 @@ const updateProfile = async (req, res) => {
 
 const getOrders = async (req, res) => {
     try {
-        const orders = await Orders.find({ buyer: req.user._id }).populate("products", "-photo").populate("buyer", "name")
+        const orders = await Orders.find({ buyer: req.user._id }).populate({ path: "products.id", select: "-photo" }).populate("buyer", "name")
+        const formattedOrders = orders.map((order) => {
+            const formattedProducts = order.products.map((product) => ({
+                _id: product.id._id,
+                name: product.id.name,
+                description: product.id.description.substring(0, 30),
+                price: product.id.price,
+                quantity: product.quantity,
+            }));
+
+            return {
+                _id: order._id,
+                products: formattedProducts,
+                payment: order.payment,
+                status: order.status,
+                buyer: order.buyer,
+            };
+        });
         res.status(200).send({
             success: true,
             message: "get Order",
-            orders
+            formattedOrders
         })
     } catch (error) {
         res.status(500).send({
@@ -218,11 +235,29 @@ const getOrders = async (req, res) => {
 
 const getAdminOrders = async (req, res) => {
     try {
-        const orders = await Orders.find({}).populate("products", "-photo").populate("buyer", "name").sort({ createdAt: "-1" });
+        const orders = await Orders.find({}).populate({ path: "products.id", select: "-photo" }).populate("buyer", "name").sort({ createdAt: "-1" });
+        const formattedOrders = orders.map((order) => {
+            const formattedProducts = order.products.map((product) => ({
+                _id: product.id._id,
+                name: product.id.name,
+                description: product.id.description.substring(0, 30),
+                price: product.id.price,
+                quantity: product.quantity,
+            }));
+
+            return {
+                _id: order._id,
+                products: formattedProducts,
+                payment: order.payment,
+                status: order.status,
+                buyer: order.buyer,
+            };
+        });
         res.status(200).send({
             success: true,
             message: "get Order",
-            orders
+            formattedOrders
+
         })
     } catch (error) {
         res.status(500).send({

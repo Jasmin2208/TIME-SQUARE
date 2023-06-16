@@ -8,7 +8,8 @@ import toast from "react-hot-toast";
 import { AiFillWarning } from "react-icons/ai";
 import DropIn from "braintree-web-drop-in-react";
 import "../styles/cartStyle.css"
-
+import { Button, Space } from 'antd';
+import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 
 
 function CartPage() {
@@ -18,14 +19,48 @@ function CartPage() {
     const [clientToken, setClientToken] = useState("");
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
+    const [count, setCount] = useState(0);
+    const ButtonGroup = Button.Group;
 
+    const increase = (productId) => {
+        const updatedCart = cart.map((item) => {
+            if (item._id === productId) {
+                return {
+                    ...item,
+                    quantity: item.quantity + 1
+                };
+            }
+            return item;
+        });
+        setCart(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+    };
+
+
+    const decline = (productId) => {
+        const updatedCart = cart.map((item) => {
+            if (item._id === productId) {
+                const updatedQuantity = item.quantity - 1;
+                if (updatedQuantity < 0) {
+                    return item;
+                }
+                return {
+                    ...item,
+                    quantity: updatedQuantity
+                };
+            }
+            return item;
+        });
+        setCart(updatedCart);
+        localStorage.setItem("cart", JSON.stringify(updatedCart));  
+    };
 
     //total price
     const totalPrice = () => {
         try {
             let total = 0;
             cart?.map((item) => {
-                total = total + item.price;
+                total += item.price * item.quantity;
             });
             return total.toLocaleString("en-US", {
                 style: "currency",
@@ -108,18 +143,25 @@ function CartPage() {
                                             className="card-img-top"
                                             alt={p.name}
                                             width="100%"
-                                            height={"130px"}
+                                            height={"165px"}
                                         />
                                     </div>
                                     <div className="col-md-4">
-                                        <p>{p.name}</p>
-                                        <p>{p.description.substring(0, 30)}</p>
+                                        <p style={{ fontWeight: "bold" }}>{p.name}</p>
+                                        <p>{p.description.substring(0, 30)}...</p>
                                         <h5 className="card-title card-price">
                                             {p.price.toLocaleString("en-US", {
                                                 style: "currency",
                                                 currency: "USD",
                                             })}
                                         </h5>
+                                        <Space size="small">
+                                            <ButtonGroup>
+                                                <Button onClick={() => decline(p._id)} icon={<MinusOutlined />} />
+                                                <Button onClick={() => increase(p._id)} icon={<PlusOutlined />} />
+                                                <Button >{p.quantity + count}</Button>
+                                            </ButtonGroup>
+                                        </Space>
                                     </div>
                                     <div className="col-md-4 cart-remove-btn">
                                         <button

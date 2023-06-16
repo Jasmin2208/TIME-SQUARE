@@ -24,7 +24,7 @@ const AdminOrders = () => {
     const getOrders = async () => {
         try {
             const { data } = await axios.get("/api/v1/auth/all-orders");
-            setOrders(data.orders);
+            setOrders(data.formattedOrders);
         } catch (error) {
             console.log(error);
         }
@@ -65,6 +65,8 @@ const AdminOrders = () => {
                                                 <th scope="col"> date</th>
                                                 <th scope="col">Payment</th>
                                                 <th scope="col">Quantity</th>
+                                                <th scope="col">Total Amount</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -87,6 +89,7 @@ const AdminOrders = () => {
                                                 <td>{moment(o?.createAt).fromNow()}</td>
                                                 <td>{o?.payment.success ? "Success" : "Failed"}</td>
                                                 <td>{o?.products?.length}</td>
+                                                <td style={{ color: "green", fontWeight:"bold"}}>$ {o?.payment.transaction.amount}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -99,6 +102,7 @@ const AdminOrders = () => {
                                                 <div className="col-md-8">
                                                     <p>{p.name}</p>
                                                     <p>{p.description.substring(0, 30)}...</p>
+                                                    <p>Quantity :{p.quantity}</p>
                                                     <p style={{ color: "green", fontWeight: "bold" }}>{p.price.toLocaleString("en-US", {
                                                         style: "currency",
                                                         currency: "USD",
