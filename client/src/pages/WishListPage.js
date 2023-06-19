@@ -49,19 +49,42 @@ const WishListPage = () => {
     }
   }
 
+  const handleAddToCart = (product) => {
+    const existingProduct = cart.find((item) => item._id === product._id);
+    if (existingProduct) {
+      const updatedCart = cart.map((item) => {
+        if (item._id === product._id) {
+          return {
+            ...item,
+            quantity: item.quantity + 1
+          };
+        }
+        return item;
+      });
+
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      toast.success("Quantity updated in cart");
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+      localStorage.setItem("cart", JSON.stringify([...cart, { ...product, quantity: 1 }]));
+      toast.success("Item added to cart");
+    }
+  };
+
 
   return (
     <Layout>
-      <div className="mt-3 category" style={{marginLeft:"10rem"}}>
+      <div className="mt-3 category" style={{ marginLeft: "10rem" }}>
         {spinner && <Loader />}
         {!spinner && (
           <>
-            <div className='row' style={{marginLeft:"35rem"}}>
+            <div className='row' style={{ marginLeft: "35rem" }}>
               <div className='col'>
                 <h4 className="text-center">Wish List Product</h4>
                 <h6 className="text-center">{products?.length} result found </h6>
               </div>
-              <div className='col' style={{marginLeft:"25rem"}}>
+              <div className='col' style={{ marginLeft: "25rem" }}>
                 <AiFillDelete style={{ width: "50px", height: "50px" }} onClick={() => handleAllRemove()} />
               </div>
             </div>
@@ -106,14 +129,7 @@ const WishListPage = () => {
                         <button
                           className="btn btn-dark ms-1"
                           id="addbtn"
-                          onClick={() => {
-                            setCart([...cart, p]);
-                            localStorage.setItem(
-                              "cart",
-                              JSON.stringify([...cart, p])
-                            );
-                            toast.success("Item Added to cart");
-                          }}
+                          onClick={() => handleAddToCart(p)}
                         >
                           ADD TO CART
                         </button>
